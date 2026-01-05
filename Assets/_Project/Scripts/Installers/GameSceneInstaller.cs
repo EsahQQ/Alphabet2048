@@ -1,0 +1,23 @@
+using _Project.Scripts.Core;
+using _Project.Scripts.Data;
+using _Project.Scripts.View;
+using UnityEngine;
+using Zenject;
+
+namespace _Project.Scripts.Installers
+{
+    public class GameSceneInstaller : MonoInstaller
+    {
+        [SerializeField] private GameConfig gameConfig;
+        [SerializeField] private Transform _tileContainer;
+        public override void InstallBindings()
+        {
+            Container.Bind<GameConfig>().FromInstance(gameConfig).AsSingle();
+            Container.BindMemoryPool<TileView, TileView.Pool>()
+                .WithInitialSize(gameConfig.gridSize[0] * gameConfig.gridSize[1])
+                .FromComponentInNewPrefab(gameConfig.tilePrefab)
+                .UnderTransform(_tileContainer);
+            Container.BindInterfacesAndSelfTo<GridManager>().AsSingle().NonLazy();
+        }
+    }
+}
