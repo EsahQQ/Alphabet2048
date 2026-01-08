@@ -42,6 +42,11 @@ namespace _Project.Scripts.Core
             SpawnRandomTile();
         }
 
+        public void Move(Direction direction)
+        {
+            
+        }
+        
         private Vector3 GetWorldPosition(int x, int y)
         {
             float xPos = _startPosition.x + x * (_gameConfig.cellSize + _gameConfig.spacing);

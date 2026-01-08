@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: Assembly-CSharp::NewScriptableObjectScript
   tilePrefab: {fileID: 8415430171795617109, guid: 856214aa8ee3ba641ab426781c8bcafd, type: 3}
-  gridSize: 0400000004000000
+  rowsCount: 4
+  columnsCount: 4
+  cellSize: 1
+  spacing: 0.1
+  slotPrefab: {fileID: 4113586178573922038, guid: 97f2cded681ac784d9fc735f543704e2, type: 3}

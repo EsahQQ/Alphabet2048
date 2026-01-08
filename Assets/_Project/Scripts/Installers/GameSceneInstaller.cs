@@ -19,6 +19,7 @@ namespace _Project.Scripts.Installers
                 .FromComponentInNewPrefab(gameConfig.tilePrefab)
                 .UnderTransform(tilesPoolContainer);
             Container.BindInterfacesAndSelfTo<GridManager>().AsSingle().WithArguments(slotsContainer).NonLazy();
+            Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle();
         }
     }
 }
