@@ -14,7 +14,7 @@ namespace _Project.Scripts.Installers
         {
             Container.Bind<GameConfig>().FromInstance(gameConfig).AsSingle();
             Container.BindMemoryPool<TileView, TileView.Pool>()
-                .WithInitialSize(gameConfig.gridSize[0] * gameConfig.gridSize[1])
+                .WithInitialSize(gameConfig.rowsCount * gameConfig.columnsCount)
                 .FromComponentInNewPrefab(gameConfig.tilePrefab)
                 .UnderTransform(_tileContainer);
             Container.BindInterfacesAndSelfTo<GridManager>().AsSingle().NonLazy();
