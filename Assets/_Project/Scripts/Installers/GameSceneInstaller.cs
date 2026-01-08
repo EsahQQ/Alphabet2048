@@ -9,16 +9,16 @@ namespace _Project.Scripts.Installers
     public class GameSceneInstaller : MonoInstaller
     {
         [SerializeField] private GameConfig gameConfig;
-        [SerializeField] private Transform tileContainer;
+        [SerializeField] private Transform tilesPoolContainer;
+        [SerializeField] private Transform slotsContainer;
         public override void InstallBindings()
         {
             Container.Bind<GameConfig>().FromInstance(gameConfig).AsSingle();
             Container.BindMemoryPool<TileView, TileView.Pool>()
                 .WithInitialSize(gameConfig.rowsCount * gameConfig.columnsCount)
                 .FromComponentInNewPrefab(gameConfig.tilePrefab)
-                .UnderTransform(tileContainer);
-            Container.BindInterfacesAndSelfTo<GridManager>().AsSingle().NonLazy();
-            Container.Bind<Transform>().FromInstance(tileContainer).WhenInjectedInto<GridManager>();
+                .UnderTransform(tilesPoolContainer);
+            Container.BindInterfacesAndSelfTo<GridManager>().AsSingle().WithArguments(slotsContainer).NonLazy();
         }
     }
 }

@@ -10,16 +10,16 @@ namespace _Project.Scripts.Core
     {
         private readonly TileView.Pool _tilePool;
         private readonly GameConfig _gameConfig;
-        private readonly Transform _tileContainer;
+        private readonly Transform _slotsContainer;
         private TileView[,] _tiles;
         private Vector2 _startPosition;
         
 
-        public GridManager(TileView.Pool tilePool, GameConfig gameConfig, Transform tileContainer)
+        public GridManager(TileView.Pool tilePool, GameConfig gameConfig, Transform slotsContainer)
         {
             _tilePool = tilePool;
             _gameConfig = gameConfig;
-            _tileContainer = tileContainer;
+            _slotsContainer = slotsContainer;
         }
         
         public void Initialize()
@@ -56,7 +56,7 @@ namespace _Project.Scripts.Core
             {
                 for (int y = 0; y < _gameConfig.rowsCount; y++)
                 {
-                    var slot = Object.Instantiate(_gameConfig.slotPrefab, _tileContainer);
+                    var slot = Object.Instantiate(_gameConfig.slotPrefab, _slotsContainer);
                     slot.transform.localPosition = GetWorldPosition(x, y);
                 }
             }
