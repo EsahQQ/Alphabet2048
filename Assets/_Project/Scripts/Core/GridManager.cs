@@ -44,7 +44,64 @@ namespace _Project.Scripts.Core
 
         public void Move(Direction direction)
         {
-            
+            Vector2Int dirVector = GetDirectionVector(direction);
+
+            bool moved = false;
+
+            var xRange = (direction == Direction.Right) ? new[]{3,2,1,0} : new[]{0,1,2,3};
+            var yRange = (direction == Direction.Up)    ? new[]{3,2,1,0} : new[]{0,1,2,3};
+
+            foreach (int x in xRange)
+            {
+                foreach (int y in yRange)
+                {
+                    TileView tile = _tiles[x, y];
+                    
+                    if (tile == null) continue;
+
+                    Vector2Int nextCell = new Vector2Int(x, y);
+                    Vector2Int farthestEmpty = nextCell;
+
+                    while (true)
+                    {
+                        nextCell += dirVector;
+
+                        if (nextCell.x < 0 || nextCell.x >= _gameConfig.columnsCount ||
+                            nextCell.y < 0 || nextCell.y >= _gameConfig.rowsCount) 
+                            break;
+                        
+                        if (_tiles[nextCell.x, nextCell.y] != null) 
+                            break;
+                        
+                        farthestEmpty = nextCell;
+                    }
+
+                    if (farthestEmpty != new Vector2Int(x, y))
+                    {
+                        _tiles[x, y] = null; 
+                        _tiles[farthestEmpty.x, farthestEmpty.y] = tile;
+                        tile.MoveTo(GetWorldPosition(farthestEmpty.x, farthestEmpty.y));
+                        moved = true;
+                    }
+                }
+            }
+
+            if (moved)
+            {
+                SpawnRandomTile(); 
+            }
+        }
+        
+        private Vector2Int GetDirectionVector(Direction dir)
+        {
+            switch (dir)
+            {
+                case Direction.Left:  return new Vector2Int(-1, 0);
+                case Direction.Right: return new Vector2Int(1, 0);
+                case Direction.Up:    return new Vector2Int(0, 1);
+                case Direction.Down:  return new Vector2Int(0, -1);
+                default: return Vector2Int.zero;
+            }
         }
         
         private Vector3 GetWorldPosition(int x, int y)
@@ -88,6 +145,7 @@ namespace _Project.Scripts.Core
 
             var tile = _tilePool.Spawn();
             tile.transform.localPosition = GetWorldPosition(coords.x, coords.y);
+            tile.Spawn();
 
             _tiles[coords.x, coords.y] = tile;
         }
