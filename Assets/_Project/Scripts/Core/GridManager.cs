@@ -47,6 +47,8 @@ namespace _Project.Scripts.Core
             Vector2Int dirVector = GetDirectionVector(direction);
 
             bool moved = false;
+            
+            HashSet<TileView> mergedTiles = new HashSet<TileView>();
 
             var xRange = (direction == Direction.Right) ? new[]{3,2,1,0} : new[]{0,1,2,3};
             var yRange = (direction == Direction.Up)    ? new[]{3,2,1,0} : new[]{0,1,2,3};
@@ -61,6 +63,7 @@ namespace _Project.Scripts.Core
 
                     Vector2Int nextCell = new Vector2Int(x, y);
                     Vector2Int farthestEmpty = nextCell;
+                    Vector2Int currentPos = new Vector2Int(x, y);
 
                     while (true)
                     {
@@ -74,6 +77,22 @@ namespace _Project.Scripts.Core
                             break;
                         
                         farthestEmpty = nextCell;
+                    }
+                    
+                    Vector2Int mergeCandidatePos = farthestEmpty + dirVector;
+                    
+                    if (IsInsideGrid(mergeCandidatePos))
+                    {
+                        TileView targetTile = _tiles[mergeCandidatePos.x, mergeCandidatePos.y];
+                        
+                        if (targetTile != null && targetTile.Level == tile.Level && !mergedTiles.Contains(targetTile))
+                        {
+                            tile.MoveToAndDestroy(GetWorldPosition(mergeCandidatePos.x, mergeCandidatePos.y), _tilePool, () => targetTile.IncreaseLevel());
+                            mergedTiles.Add(targetTile);
+                            _tiles[currentPos.x, currentPos.y] = null;
+                            moved = true;
+                            continue; 
+                        }
                     }
 
                     if (farthestEmpty != new Vector2Int(x, y))
@@ -90,6 +109,12 @@ namespace _Project.Scripts.Core
             {
                 SpawnRandomTile(); 
             }
+        }
+        
+        private bool IsInsideGrid(Vector2Int pos)
+        {
+            return pos.x >= 0 && pos.x < _gameConfig.columnsCount &&
+                   pos.y >= 0 && pos.y < _gameConfig.rowsCount;
         }
         
         private Vector2Int GetDirectionVector(Direction dir)

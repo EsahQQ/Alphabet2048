@@ -18,3 +18,100 @@ MonoBehaviour:
   cellSize: 1
   spacing: 0.1
   slotPrefab: {fileID: 4113586178573922038, guid: 97f2cded681ac784d9fc735f543704e2, type: 3}
+  alphabet:
+  - character: 1040
+    bgColor: {r: 1, g: 0, b: 0, a: 1}
+  - character: 1041
+    bgColor: {r: 1, g: 0.09336721, b: 0, a: 1}
+  - character: 1042
+    bgColor: {r: 1, g: 0.18673442, b: 0, a: 1}
+  - character: 1043
+    bgColor: {r: 1, g: 0.28010163, b: 0, a: 1}
+  - character: 1044
+    bgColor: {r: 1, g: 0.37346885, b: 0, a: 1}
+  - character: 1045
+    bgColor: {r: 1, g: 0.46683604, b: 0, a: 1}
+  - character: 1025
+    bgColor: {r: 1, g: 0.56020325, b: 0, a: 1}
+  - character: 1046
+    bgColor: {r: 1, g: 0.6535705, b: 0, a: 1}
+  - character: 1047
+    bgColor: {r: 1, g: 0.7469377, b: 0, a: 1}
+  - character: 1048
+    bgColor: {r: 1, g: 0.65359324, b: 0.11449719, a: 1}
+  - character: 1049
+    bgColor: {r: 1, g: 0.5602261, b: 0.22900836, a: 1}
+  - character: 1050
+    bgColor: {r: 1, g: 0.46685883, b: 0.34351954, a: 1}
+  - character: 1051
+    bgColor: {r: 1, g: 0.37349164, b: 0.4580307, a: 1}
+  - character: 1052
+    bgColor: {r: 1, g: 0.28012443, b: 0.5725419, a: 1}
+  - character: 1053
+    bgColor: {r: 1, g: 0.1867572, b: 0.6870531, a: 1}
+  - character: 1054
+    bgColor: {r: 1, g: 0.09338999, b: 0.8015642, a: 1}
+  - character: 1055
+    bgColor: {r: 1, g: 0.000022768974, b: 0.9160754, a: 1}
+  - character: 1056
+    bgColor: {r: 0.8756318, g: 0.124975204, b: 0.80161315, a: 1}
+  - character: 1057
+    bgColor: {r: 0.7512332, g: 0.24998093, b: 0.687095, a: 1}
+  - character: 1058
+    bgColor: {r: 0.6268347, g: 0.37498665, b: 0.5725768, a: 1}
+  - character: 1059
+    bgColor: {r: 0.50243616, g: 0.49999237, b: 0.45805869, a: 1}
+  - character: 1060
+    bgColor: {r: 0.37803757, g: 0.6249981, b: 0.3435405, a: 1}
+  - character: 1061
+    bgColor: {r: 0.25363898, g: 0.7500038, b: 0.22902232, a: 1}
+  - character: 1062
+    bgColor: {r: 0.12924045, g: 0.87500954, b: 0.11450416, a: 1}
+  - character: 1063
+    bgColor: {r: 0.0048569893, g: 0.9999864, b: 0.000015258789, a: 1}
+  - character: 1064
+    bgColor: {r: 0.0042498657, g: 0.88882154, b: 0.12501335, a: 1}
+  - character: 1065
+    bgColor: {r: 0.003642742, g: 0.7776567, b: 0.25001144, a: 1}
+  - character: 1066
+    bgColor: {r: 0.0030356182, g: 0.6664918, b: 0.37500954, a: 1}
+  - character: 1067
+    bgColor: {r: 0.0024284946, g: 0.55532694, b: 0.5000076, a: 1}
+  - character: 1068
+    bgColor: {r: 0.001821371, g: 0.44416207, b: 0.6250057, a: 1}
+  - character: 1069
+    bgColor: {r: 0.0012142472, g: 0.3329972, b: 0.7500038, a: 1}
+  - character: 1070
+    bgColor: {r: 0.0006071236, g: 0.22183233, b: 0.8750019, a: 1}
+  - character: 1071
+    bgColor: {r: 0, g: 0.11066747, b: 1, a: 1}
+  colorGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0, b: 0, a: 1}
+    key1: {r: 0, g: 1, b: 0, a: 1}
+    key2: {r: 0.5450981, g: 0, b: 0.5450981, a: 0}
+    key3: {r: 0, g: 0, b: 1, a: 0}
+    key4: {r: 1, g: 0.92156863, b: 0.015686275, a: 0}
+    key5: {r: 1, g: 0, b: 1, a: 0}
+    key6: {r: 0.5490196, g: 0.7882354, b: 0.1411765, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 10879
+    ctime2: 21974
+    ctime3: 33346
+    ctime4: 43581
+    ctime5: 54479
+    ctime6: 65535
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 7
+    m_NumAlphaKeys: 2
