@@ -283,3 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d97d6843d1a094eaa11a32c2bab571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileView
+  moveDuration: 0.2
+  scaleDuration: 0.2
+  charText: {fileID: 6327749076592297913}
+  spriteRenderer: {fileID: 3399036029030908975}
