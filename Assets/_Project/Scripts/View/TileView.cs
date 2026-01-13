@@ -64,16 +64,23 @@ namespace _Project.Scripts.View
         
         public void MoveToAndDestroy(Vector3 targetPosition, TileView.Pool pool, Action onComplete)
         {
-            var sprite = GetComponent<SpriteRenderer>();
-            sprite.sortingOrder = 10; 
+            spriteRenderer.sortingOrder = 10; 
 
             transform.DOLocalMove(targetPosition, moveDuration).OnComplete(() =>
             {
-                sprite.sortingOrder = 0; 
+                spriteRenderer.sortingOrder = 0;
+                Reset();
+				
                 pool.Despawn(this);
                 
                 onComplete?.Invoke();
             });
         }
-    }
+        private void Reset()
+        {
+            Level = 0;
+            spriteRenderer.color = _gameConfig.alphabet[Level].bgColor;
+            charText.text = _gameConfig.alphabet[Level].character.ToString();
+        }
+    }   
 }
