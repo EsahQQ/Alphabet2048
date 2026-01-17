@@ -13,6 +13,7 @@ namespace _Project.Scripts.Data
         public float cellSize = 1.0f;
         public float spacing = 0.1f;
         public GameObject slotPrefab;
+        public GameObject backgroundPrefab;
         
         public List<LetterData> alphabet; 
         

@@ -18,6 +18,7 @@ MonoBehaviour:
   cellSize: 1
   spacing: 0.1
   slotPrefab: {fileID: 4113586178573922038, guid: 97f2cded681ac784d9fc735f543704e2, type: 3}
+  backgroundPrefab: {fileID: 4113586178573922038, guid: 2f2b013ffb018e440b0bd8d2b5dd8cab, type: 3}
   alphabet:
   - character: 1040
     bgColor: {r: 1, g: 0, b: 0, a: 1}

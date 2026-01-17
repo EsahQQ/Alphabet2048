@@ -139,10 +139,12 @@ namespace _Project.Scripts.Core
 
         private void CreateGridBackground()
         {
+            var background = Object.Instantiate(_gameConfig.backgroundPrefab, _slotsContainer);
+            background.transform.localScale = new Vector3(_gameConfig.columnsCount + _gameConfig.spacing * (_gameConfig.columnsCount + 1g), _gameConfig.rowsCount + _gameConfig.spacing * (_gameConfig.rowsCount + 1), 1);
             for (int x = 0; x < _gameConfig.columnsCount; x++)
             {
                 for (int y = 0; y < _gameConfig.rowsCount; y++)
-                {
+                {   
                     var slot = Object.Instantiate(_gameConfig.slotPrefab, _slotsContainer);
                     slot.transform.localPosition = GetWorldPosition(x, y);
                 }
