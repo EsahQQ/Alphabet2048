@@ -1,4 +1,5 @@
 using System;
+using _Project.Scripts.Core;
 using _Project.Scripts.Data;
 using DG.Tweening;
 using TMPro;
@@ -15,14 +16,16 @@ namespace _Project.Scripts.View
         [SerializeField] private SpriteRenderer spriteRenderer;
         
         private GameConfig _gameConfig;
+        private LevelPicker _levelPicker;
         
         public int Level { get; private set; }
 
         [Inject]
-        public void Construct(GameConfig gameConfig)
+        public void Construct(GameConfig gameConfig, LevelPicker levelPicker)
         {
             _gameConfig = gameConfig;
-            Level = 0;
+            _levelPicker = levelPicker;
+            Level = _levelPicker.CurrentStartLetterNumber;
             spriteRenderer.color = _gameConfig.alphabet[Level].bgColor;
         }
         
@@ -78,7 +81,7 @@ namespace _Project.Scripts.View
         }
         private void Reset()
         {
-            Level = 0;
+            Level = _levelPicker.CurrentStartLetterNumber;
             spriteRenderer.color = _gameConfig.alphabet[Level].bgColor;
             charText.text = _gameConfig.alphabet[Level].character.ToString();
         }

@@ -3,6 +3,7 @@ using _Project.Scripts.Data;
 using _Project.Scripts.View;
 using UnityEngine;
 using Zenject;
+using Zenject.SpaceFighter;
 
 namespace _Project.Scripts.Installers
 {
@@ -11,6 +12,7 @@ namespace _Project.Scripts.Installers
         [SerializeField] private GameConfig gameConfig;
         [SerializeField] private Transform tilesPoolContainer;
         [SerializeField] private Transform slotsContainer;
+        [SerializeField] private LevelPicker levelPicker;
         public override void InstallBindings()
         {
             Container.Bind<GameConfig>().FromInstance(gameConfig).AsSingle();
@@ -20,6 +22,7 @@ namespace _Project.Scripts.Installers
                 .UnderTransform(tilesPoolContainer);
             Container.BindInterfacesAndSelfTo<GridManager>().AsSingle().WithArguments(slotsContainer).NonLazy();
             Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelPicker>().FromInstance(levelPicker).AsSingle();
         }
     }
 }
