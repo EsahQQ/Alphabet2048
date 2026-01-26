@@ -16,7 +16,6 @@ namespace _Project.Scripts.View
         [SerializeField] private SpriteRenderer spriteRenderer;
         
         private GameConfig _gameConfig;
-        private LevelPicker _levelPicker;
         
         public int Level { get; private set; }
 
@@ -24,11 +23,14 @@ namespace _Project.Scripts.View
         public void Construct(GameConfig gameConfig, LevelPicker levelPicker)
         {
             _gameConfig = gameConfig;
-            _levelPicker = levelPicker;
-            Level = _levelPicker.CurrentStartLetterNumber;
-            spriteRenderer.color = _gameConfig.alphabet[Level].bgColor;
         }
         
+        public void SetLevel(int level)
+        {
+            Level = level;
+            UpdateVisuals();
+        }
+
         public class Pool : MonoMemoryPool<TileView> {}
 
         public void MoveTo(Vector3 targetPosition)
@@ -72,18 +74,9 @@ namespace _Project.Scripts.View
             transform.DOLocalMove(targetPosition, moveDuration).OnComplete(() =>
             {
                 spriteRenderer.sortingOrder = 0;
-                Reset();
-				
                 pool.Despawn(this);
-                
                 onComplete?.Invoke();
             });
-        }
-        private void Reset()
-        {
-            Level = _levelPicker.CurrentStartLetterNumber;
-            spriteRenderer.color = _gameConfig.alphabet[Level].bgColor;
-            charText.text = _gameConfig.alphabet[Level].character.ToString();
         }
     }   
 }

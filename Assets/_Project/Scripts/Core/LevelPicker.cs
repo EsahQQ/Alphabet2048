@@ -20,7 +20,7 @@ namespace _Project.Scripts.Core
         public void LevelMinus()
         {
             CurrentLevel = Mathf.Max(CurrentLevel - 1, 0);
-            CurrentStartLetterNumber = Mathf.Min(CurrentStartLetterNumber - 11, 0);
+            CurrentStartLetterNumber = Mathf.Max(CurrentStartLetterNumber - 11, 0);
             OnLevelChanged?.Invoke(this, EventArgs.Empty);
         }
     }

@@ -10,16 +10,18 @@ namespace _Project.Scripts.Core
     {
         private readonly TileView.Pool _tilePool;
         private readonly GameConfig _gameConfig;
+        private readonly LevelPicker _levelPicker;
         private readonly Transform _slotsContainer;
         private TileView[,] _tiles;
         private Vector2 _startPosition;
         
 
-        public GridManager(TileView.Pool tilePool, GameConfig gameConfig, Transform slotsContainer)
+        public GridManager(TileView.Pool tilePool, GameConfig gameConfig, Transform slotsContainer, LevelPicker levelPicker)
         {
             _tilePool = tilePool;
             _gameConfig = gameConfig;
             _slotsContainer = slotsContainer;
+            _levelPicker = levelPicker;
         }
         
         public void Initialize()
@@ -38,8 +40,7 @@ namespace _Project.Scripts.Core
 
             CreateGridBackground();
 
-            SpawnRandomTile();
-            SpawnRandomTile();
+            Start();
         }
 
         public void Move(Direction direction)
@@ -110,6 +111,27 @@ namespace _Project.Scripts.Core
                 SpawnRandomTile(); 
             }
         }
+
+        public void Reset()
+        {
+            for (int x = 0; x < _tiles.GetLength(0); x++)
+            {
+                for (int y = 0; y < _tiles.GetLength(1); y++)
+                {
+                    if (_tiles[x, y] != null)
+                    {
+                        _tilePool.Despawn(_tiles[x, y]);
+                        _tiles[x, y] = null;
+                    }
+                }
+            }
+        }
+        
+        public void Start()
+        {
+            SpawnRandomTile();
+            SpawnRandomTile();
+        }
         
         private bool IsInsideGrid(Vector2Int pos)
         {
@@ -175,6 +197,12 @@ namespace _Project.Scripts.Core
             tile.Spawn();
 
             _tiles[coords.x, coords.y] = tile;
+
+            int startOffset = _levelPicker.CurrentStartLetterNumber;
+
+            int tileLevel = startOffset;
+
+            tile.SetLevel(tileLevel);
         }
     }
 }
