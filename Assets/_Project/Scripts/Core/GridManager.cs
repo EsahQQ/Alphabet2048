@@ -43,8 +43,6 @@ namespace _Project.Scripts.Core
             );
 
             CreateGridBackground();
-
-            Start();
         }
 
         public void Move(Direction direction)

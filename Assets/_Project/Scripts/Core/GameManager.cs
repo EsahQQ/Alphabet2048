@@ -18,6 +18,10 @@ namespace _Project.Scripts.Core
             _gridManager =  gridManager;
         }
         
+        private void Start()
+        {
+            _gridManager.Start();
+        }
 
         private void ChangeLevel(object sender, EventArgs e)
         {
