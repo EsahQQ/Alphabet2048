@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using _Project.Scripts.Data;
 using _Project.Scripts.View;
 using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.Core
 {
@@ -14,7 +17,8 @@ namespace _Project.Scripts.Core
         private readonly Transform _slotsContainer;
         private TileView[,] _tiles;
         private Vector2 _startPosition;
-        
+
+        public event EventHandler<int> OnLetterSpawned;
 
         public GridManager(TileView.Pool tilePool, GameConfig gameConfig, Transform slotsContainer, LevelPicker levelPicker)
         {
@@ -88,7 +92,11 @@ namespace _Project.Scripts.Core
                         
                         if (targetTile != null && targetTile.Level == tile.Level && !mergedTiles.Contains(targetTile))
                         {
-                            tile.MoveToAndDestroy(GetWorldPosition(mergeCandidatePos.x, mergeCandidatePos.y), _tilePool, () => targetTile.IncreaseLevel());
+                            tile.MoveToAndDestroy(GetWorldPosition(mergeCandidatePos.x, mergeCandidatePos.y), _tilePool, () =>
+                            {
+                                targetTile.IncreaseLevel();
+                                OnLetterSpawned?.Invoke(this, targetTile.Level);
+                            });
                             mergedTiles.Add(targetTile);
                             _tiles[currentPos.x, currentPos.y] = null;
                             moved = true;
@@ -203,6 +211,8 @@ namespace _Project.Scripts.Core
             int tileLevel = startOffset;
 
             tile.SetLevel(tileLevel);
+            
+            OnLetterSpawned?.Invoke(this, tile.Level);
         }
     }
 }

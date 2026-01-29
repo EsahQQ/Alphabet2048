@@ -23,6 +23,7 @@ namespace _Project.Scripts.Installers
             Container.BindInterfacesAndSelfTo<GridManager>().AsSingle().WithArguments(slotsContainer).NonLazy();
             Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelPicker>().FromInstance(levelPicker).AsSingle();
+            Container.BindInterfacesAndSelfTo<CollectionService>().AsSingle().NonLazy();
         }
     }
 }
