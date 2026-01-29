@@ -9,7 +9,7 @@
         {
             public event EventHandler<int> OnNewLetterDiscovered;
             
-            private GridManager _gridManager;
+            private readonly GridManager _gridManager;
 
             public CollectionService(GridManager gridManager)
             {
@@ -29,6 +29,7 @@
             
             private void UnlockLetter(object sender, int levelIndex)
             {
+                IncreaseLettersCount(levelIndex);
                 if (IsLetterUnlocked(levelIndex))
                     return;
 
@@ -40,14 +41,20 @@
                 OnNewLetterDiscovered?.Invoke(this, levelIndex);
             }
 
-            public bool IsLetterUnlocked(int levelIndex)
+            private bool IsLetterUnlocked(int levelIndex)
             {
                 return PlayerPrefs.GetInt($"Letter_Unlocked_{levelIndex}", 0) == 1;
             }
-            
-            public void ClearProgress()
+
+            private void ClearProgress()
             {
                 PlayerPrefs.DeleteAll();
+            }
+
+            private void IncreaseLettersCount(int levelIndex)
+            {
+                int currentCount = PlayerPrefs.GetInt($"Letter_Count_{levelIndex}", 0);
+                PlayerPrefs.SetInt($"Letter_Count_{levelIndex}", currentCount + 1);
             }
         }
     }
