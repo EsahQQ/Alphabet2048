@@ -24,6 +24,7 @@ namespace _Project.Scripts.Installers
             Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelPicker>().FromInstance(levelPicker).AsSingle();
             Container.BindInterfacesAndSelfTo<CollectionService>().AsSingle().NonLazy();
+            Container.Bind<WindowManager>().FromComponentInHierarchy().AsSingle();
         }
     }
 }

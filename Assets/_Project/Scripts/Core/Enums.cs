@@ -7,4 +7,13 @@
         Up,
         Down
     }
+
+    public enum WindowType
+    {
+        Settings,
+        Trophy,
+        Home,
+        Locked,
+        NoAds
+    }
 }

@@ -6,17 +6,22 @@ namespace _Project.Scripts.Core
     public class InputHandler : ITickable
     {
         private readonly GridManager _gridManager;
+        private readonly WindowManager _windowManager;
         private Vector2 _startTouchPosition;
         private bool _isSwiping;
         private const float SwipeThreshold = 50f;
 
-        public InputHandler(GridManager gridManager)
+        public InputHandler(GridManager gridManager, WindowManager windowManager)
         {
             _gridManager = gridManager;
+            _windowManager = windowManager;
         }
 
         public void Tick()
         {
+            if (_windowManager.CurrentWindow != WindowType.Home)
+                return;
+            
             if (Input.GetMouseButtonDown(0))
             {
                 _startTouchPosition = Input.mousePosition;
