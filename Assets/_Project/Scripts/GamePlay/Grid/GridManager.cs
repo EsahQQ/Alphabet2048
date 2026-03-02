@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
 using _Project.Scripts.Data;
-using _Project.Scripts.View;
+using _Project.Scripts.GamePlay.LevelsLogic;
+using _Project.Scripts.GamePlay.View;
+using _Project.Scripts.Utils;
 using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace _Project.Scripts.Core
+namespace _Project.Scripts.GamePlay.Grid
 {
     public class GridManager : IInitializable
     {
@@ -30,12 +32,12 @@ namespace _Project.Scripts.Core
         
         public void Initialize()
         {
-            int rows = _gameConfig.rowsCount;
-            int columns = _gameConfig.columnsCount;
+            var rows = _gameConfig.rowsCount;
+            var columns = _gameConfig.columnsCount;
             _tiles = new TileView[rows, columns];
             
-            float width = columns * _gameConfig.cellSize + (columns - 1) * _gameConfig.spacing;
-            float height = rows * _gameConfig.cellSize + (rows - 1) * _gameConfig.spacing;
+            var width = columns * _gameConfig.cellSize + (columns - 1) * _gameConfig.spacing;
+            var height = rows * _gameConfig.cellSize + (rows - 1) * _gameConfig.spacing;
             
             _startPosition = new Vector2(
                 -width / 2 + _gameConfig.cellSize / 2,
@@ -43,30 +45,30 @@ namespace _Project.Scripts.Core
             );
 
             CreateGridBackground();
+            SpawnInitialTiles();
         }
 
         public void Move(Direction direction)
         {
-            Vector2Int dirVector = GetDirectionVector(direction);
+            var dirVector = GetDirectionVector(direction);
 
             bool moved = false;
             
-            HashSet<TileView> mergedTiles = new HashSet<TileView>();
+            var mergedTiles = new HashSet<TileView>();
 
             var xRange = (direction == Direction.Right) ? new[]{3,2,1,0} : new[]{0,1,2,3};
             var yRange = (direction == Direction.Up)    ? new[]{3,2,1,0} : new[]{0,1,2,3};
 
-            foreach (int x in xRange)
-            {
-                foreach (int y in yRange)
+            foreach (var x in xRange)
+                foreach (var y in yRange)
                 {
-                    TileView tile = _tiles[x, y];
+                    var tile = _tiles[x, y];
                     
                     if (tile == null) continue;
 
-                    Vector2Int nextCell = new Vector2Int(x, y);
-                    Vector2Int farthestEmpty = nextCell;
-                    Vector2Int currentPos = new Vector2Int(x, y);
+                    var nextCell = new Vector2Int(x, y);
+                    var farthestEmpty = nextCell;
+                    var currentPos = new Vector2Int(x, y);
 
                     while (true)
                     {
@@ -82,11 +84,11 @@ namespace _Project.Scripts.Core
                         farthestEmpty = nextCell;
                     }
                     
-                    Vector2Int mergeCandidatePos = farthestEmpty + dirVector;
+                    var mergeCandidatePos = farthestEmpty + dirVector;
                     
                     if (IsInsideGrid(mergeCandidatePos))
                     {
-                        TileView targetTile = _tiles[mergeCandidatePos.x, mergeCandidatePos.y];
+                        var targetTile = _tiles[mergeCandidatePos.x, mergeCandidatePos.y];
                         
                         if (targetTile != null && targetTile.Level == tile.Level && !mergedTiles.Contains(targetTile))
                         {
@@ -102,15 +104,14 @@ namespace _Project.Scripts.Core
                         }
                     }
 
-                    if (farthestEmpty != new Vector2Int(x, y))
-                    {
-                        _tiles[x, y] = null; 
-                        _tiles[farthestEmpty.x, farthestEmpty.y] = tile;
-                        tile.MoveTo(GetWorldPosition(farthestEmpty.x, farthestEmpty.y));
-                        moved = true;
-                    }
+                    if (farthestEmpty == new Vector2Int(x, y)) continue;
+                    
+                    _tiles[x, y] = null; 
+                    _tiles[farthestEmpty.x, farthestEmpty.y] = tile;
+                    tile.MoveTo(GetWorldPosition(farthestEmpty.x, farthestEmpty.y));
+                    moved = true;
                 }
-            }
+            
 
             if (moved)
             {
@@ -120,20 +121,17 @@ namespace _Project.Scripts.Core
 
         public void Reset()
         {
-            for (int x = 0; x < _tiles.GetLength(0); x++)
-            {
-                for (int y = 0; y < _tiles.GetLength(1); y++)
+            for (var x = 0; x < _tiles.GetLength(0); x++)
+                for (var y = 0; y < _tiles.GetLength(1); y++)
                 {
-                    if (_tiles[x, y] != null)
-                    {
-                        _tilePool.Despawn(_tiles[x, y]);
-                        _tiles[x, y] = null;
-                    }
+                    if (_tiles[x, y] == null) continue;
+                    
+                    _tilePool.Despawn(_tiles[x, y]);
+                    _tiles[x, y] = null;
                 }
-            }
         }
         
-        public void Start()
+        public void SpawnInitialTiles()
         {
             SpawnRandomTile();
             SpawnRandomTile();
@@ -147,20 +145,20 @@ namespace _Project.Scripts.Core
         
         private Vector2Int GetDirectionVector(Direction dir)
         {
-            switch (dir)
+            return dir switch
             {
-                case Direction.Left:  return new Vector2Int(-1, 0);
-                case Direction.Right: return new Vector2Int(1, 0);
-                case Direction.Up:    return new Vector2Int(0, 1);
-                case Direction.Down:  return new Vector2Int(0, -1);
-                default: return Vector2Int.zero;
-            }
+                Direction.Left => new Vector2Int(-1, 0),
+                Direction.Right => new Vector2Int(1, 0),
+                Direction.Up => new Vector2Int(0, 1),
+                Direction.Down => new Vector2Int(0, -1),
+                _ => Vector2Int.zero
+            };
         }
         
         private Vector3 GetWorldPosition(int x, int y)
         {
-            float xPos = _startPosition.x + x * (_gameConfig.cellSize + _gameConfig.spacing);
-            float yPos = _startPosition.y + y * (_gameConfig.cellSize + _gameConfig.spacing);
+            var xPos = _startPosition.x + x * (_gameConfig.cellSize + _gameConfig.spacing);
+            var yPos = _startPosition.y + y * (_gameConfig.cellSize + _gameConfig.spacing);
             
             return new Vector3(xPos, yPos, 0);
         }
@@ -169,30 +167,26 @@ namespace _Project.Scripts.Core
         {
             var background = Object.Instantiate(_gameConfig.backgroundPrefab, _slotsContainer);
             background.transform.localScale = new Vector3(_gameConfig.columnsCount + _gameConfig.spacing * (_gameConfig.columnsCount + 1), _gameConfig.rowsCount + _gameConfig.spacing * (_gameConfig.rowsCount + 1), 1);
-            for (int x = 0; x < _gameConfig.columnsCount; x++)
-            {
-                for (int y = 0; y < _gameConfig.rowsCount; y++)
+            for (var x = 0; x < _gameConfig.columnsCount; x++)
+                for (var y = 0; y < _gameConfig.rowsCount; y++)
                 {   
                     var slot = Object.Instantiate(_gameConfig.slotPrefab, _slotsContainer);
                     slot.transform.localPosition = GetWorldPosition(x, y);
                 }
-            }
         }
 
         private void SpawnRandomTile()
         {
             var emptyCells = new List<Vector2Int>();
     
-            for (int x = 0; x < _gameConfig.columnsCount; x++)
-            {
-                for (int y = 0; y < _gameConfig.rowsCount; y++)
+            for (var x = 0; x < _gameConfig.columnsCount; x++)
+                for (var y = 0; y < _gameConfig.rowsCount; y++)
                 {
                     if (_tiles[x, y] == null)
                     {
                         emptyCells.Add(new Vector2Int(x, y));
                     }
                 }
-            }
             
             if (emptyCells.Count == 0) return;
 
@@ -204,11 +198,9 @@ namespace _Project.Scripts.Core
 
             _tiles[coords.x, coords.y] = tile;
 
-            int startOffset = _levelPicker.CurrentStartLetterNumber;
+            var startOffset = _levelPicker.CurrentStartLetterNumber;
 
-            int tileLevel = startOffset;
-
-            tile.SetLevel(tileLevel);
+            tile.SetLevel(startOffset);
             
             OnLetterSpawned?.Invoke(this, tile.Level);
         }

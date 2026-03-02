@@ -1,9 +1,9 @@
-﻿    using System;
-    using UnityEngine;
-    using UnityEngine.EventSystems;
-    using Zenject;
+﻿using System;
+using _Project.Scripts.GamePlay.Grid;
+using UnityEngine;
+using Zenject;
 
-    namespace _Project.Scripts.Core
+namespace _Project.Scripts.Infrastructure.Services
     {
         public class CollectionService : IInitializable, IDisposable
         {
@@ -34,9 +34,8 @@
                     return;
 
                 PlayerPrefs.SetInt($"Letter_Unlocked_{levelIndex}", 1);
-                PlayerPrefs.Save();
                 
-                Debug.Log($"НОВАЯ БУКВА ОТКРЫТА: {levelIndex}");
+                Debug.Log($"Открыта буква: {levelIndex}");
                 
                 OnNewLetterDiscovered?.Invoke(this, levelIndex);
             }
@@ -53,7 +52,7 @@
 
             private void IncreaseLettersCount(int levelIndex)
             {
-                int currentCount = PlayerPrefs.GetInt($"Letter_Count_{levelIndex}", 0);
+                var currentCount = PlayerPrefs.GetInt($"Letter_Count_{levelIndex}", 0);
                 PlayerPrefs.SetInt($"Letter_Count_{levelIndex}", currentCount + 1);
             }
         }

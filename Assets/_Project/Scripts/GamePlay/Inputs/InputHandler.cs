@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using _Project.Scripts.GamePlay.Grid;
+using _Project.Scripts.UI.Windows;
+using _Project.Scripts.Utils;
+using UnityEngine;
 using Zenject;
 
-namespace _Project.Scripts.Core
+namespace _Project.Scripts.GamePlay.Inputs
 {
     public class InputHandler : ITickable
     {
@@ -36,7 +39,7 @@ namespace _Project.Scripts.Core
         
         private void ProcessSwipe(Vector2 endTouchPosition)
         {
-            Vector2 vector = endTouchPosition - _startTouchPosition;
+            var vector = endTouchPosition - _startTouchPosition;
             if (vector.magnitude < SwipeThreshold) return; 
 
             if (Mathf.Abs(vector.x) > Mathf.Abs(vector.y))

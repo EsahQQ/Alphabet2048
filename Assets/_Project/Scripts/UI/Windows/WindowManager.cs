@@ -1,7 +1,7 @@
-﻿using UnityEditor.PackageManager.UI;
+﻿using _Project.Scripts.Utils;
 using UnityEngine;
 
-namespace _Project.Scripts.Core
+namespace _Project.Scripts.UI.Windows
 {
     public class WindowManager : MonoBehaviour
     {

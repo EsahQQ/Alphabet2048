@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using _Project.Scripts.Utils;
+using UnityEngine;
 
-namespace _Project.Scripts.Core
+namespace _Project.Scripts.UI.Windows
 {
     public class AppWindow : MonoBehaviour
     {
-        [SerializeField] private WindowType _type;
+        [SerializeField] private WindowType type;
 
-        public WindowType Type => _type;
+        public WindowType Type => type;
 
         public void Open()
         {

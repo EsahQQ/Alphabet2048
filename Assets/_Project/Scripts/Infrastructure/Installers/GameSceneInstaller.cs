@@ -1,11 +1,14 @@
-using _Project.Scripts.Core;
 using _Project.Scripts.Data;
-using _Project.Scripts.View;
+using _Project.Scripts.GamePlay.Grid;
+using _Project.Scripts.GamePlay.Inputs;
+using _Project.Scripts.GamePlay.LevelsLogic;
+using _Project.Scripts.GamePlay.View;
+using _Project.Scripts.Infrastructure.Services;
+using _Project.Scripts.UI.Windows;
 using UnityEngine;
 using Zenject;
-using Zenject.SpaceFighter;
 
-namespace _Project.Scripts.Installers
+namespace _Project.Scripts.Infrastructure.Installers
 {
     public class GameSceneInstaller : MonoInstaller
     {
@@ -21,7 +24,7 @@ namespace _Project.Scripts.Installers
                 .FromComponentInNewPrefab(gameConfig.tilePrefab)
                 .UnderTransform(tilesPoolContainer);
             Container.BindInterfacesAndSelfTo<GridManager>().AsSingle().WithArguments(slotsContainer).NonLazy();
-            Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle();
+            Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<LevelPicker>().FromInstance(levelPicker).AsSingle();
             Container.BindInterfacesAndSelfTo<CollectionService>().AsSingle().NonLazy();
             Container.Bind<WindowManager>().FromComponentInHierarchy().AsSingle();

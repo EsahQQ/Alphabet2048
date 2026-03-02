@@ -23,15 +23,16 @@ namespace _Project.Scripts.Data
         private void GenerateAlphabet()
         {
             alphabet = new List<LetterData>();
-            var chars = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+            const string chars = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
             
-            for (int i = 0; i < chars.Length; i++)
+            for (var i = 0; i < chars.Length; i++)
             {
-                var data = new LetterData();
+                var data = new LetterData
+                {
+                    character = chars[i]
+                };
 
-                data.character = chars[i];
-                
-                float time = (float)i / (chars.Length - 1);
+                var time = (float)i / (chars.Length - 1);
                 data.bgColor = colorGradient.Evaluate(time);
 
                 alphabet.Add(data);

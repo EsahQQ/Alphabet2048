@@ -1,8 +1,10 @@
 ﻿using System;
+using _Project.Scripts.GamePlay.Grid;
+using _Project.Scripts.GamePlay.LevelsLogic;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.Scripts.Core
+namespace _Project.Scripts.Infrastructure
 {
     public class GameManager : MonoBehaviour
     {
@@ -18,10 +20,6 @@ namespace _Project.Scripts.Core
             _gridManager =  gridManager;
         }
         
-        private void Start()
-        {
-            _gridManager.Start();
-        }
 
         private void ChangeLevel(object sender, EventArgs e)
         {
@@ -31,7 +29,7 @@ namespace _Project.Scripts.Core
         private void Restart()
         {
             _gridManager.Reset();
-            _gridManager.Start();
+            _gridManager.SpawnInitialTiles();
         }
     }
 }

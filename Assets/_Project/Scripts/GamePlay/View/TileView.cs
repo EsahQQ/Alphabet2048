@@ -1,12 +1,12 @@
 using System;
-using _Project.Scripts.Core;
 using _Project.Scripts.Data;
+using _Project.Scripts.GamePlay.LevelsLogic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.Scripts.View
+namespace _Project.Scripts.GamePlay.View
 {
     public class TileView : MonoBehaviour
     {

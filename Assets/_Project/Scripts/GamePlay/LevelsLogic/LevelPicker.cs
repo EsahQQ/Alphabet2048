@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace _Project.Scripts.Core
+namespace _Project.Scripts.GamePlay.LevelsLogic
 {
     public class LevelPicker : MonoBehaviour
     {

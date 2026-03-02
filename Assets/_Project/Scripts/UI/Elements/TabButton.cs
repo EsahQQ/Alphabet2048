@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using _Project.Scripts.UI.Windows;
+using _Project.Scripts.Utils;
+using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace _Project.Scripts.Core
+namespace _Project.Scripts.UI.Elements
 {
     public class TabButton : MonoBehaviour
     {
